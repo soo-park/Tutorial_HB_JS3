@@ -32,13 +32,32 @@
 
 <fieldset>
   <i id="message-to-change">hello</i>
-  <button id="change-hello-to-goodbye-button">Turn <b>Hello</b> Into <b>Goodbye</b></button>
+  <button id="change-hello-to-goodbye-button">Turn <b id="before">Hello</b> Into <b id="after">Goodbye</b></button>
   <!-- Hey, look, that was another way to do a button - what might it be good for? -->
 </fieldset>
 
 <script>
+  // Practice with standard JS
   "use strict";
-  // code here for above-problem
+  var message = document.getElementById("message-to-change");
+  var before = document.getElementById("before");
+  var after = document.getElementById("after");
+  var button = document.getElementById("change-hello-to-goodbye-button");
+
+  function toggleHello(){
+    if (message.innerHTML === "hello"){
+      message.innerHTML = "goodbye";
+      before.innerHTML = "Goodbye";
+      after.innerHTML = "Hello";
+    }
+    else{
+      message.innerHTML = "hello";
+      before.innerHTML = "Hello";
+      after.innerHTML = "Goodbye";
+    }
+  }
+  button.addEventListener('click', toggleHello);
+
 </script>
 
 <div class="hint">
@@ -65,8 +84,15 @@
 </fieldset>
 
 <script>
-  "use strict";
-  // code here for above problem
+  // Parctice using standard JS
+  var submiter = document.getElementById("prevent-form-submission-form");
+
+  function alerter(evt){
+    alert(document.getElementById("favorite-color-field").value);
+    evt.preventDefault();
+  }
+
+  submiter.addEventListener('submit', alerter);
 </script>
 
 <div class="hint">
@@ -89,22 +115,19 @@
 <script>
   "use strict";
 
-//  Here's a stub of a function you can use!
+  // Here's a stub of a function you can use!
+  var msg = "Porcupines are cute";
 
-//  function reverseString() {
-//    var msg = "Porcupines are cute";
-//
-//    // do some stuff here to reverse that string into a new variable
-//    var newMsg = "This should be the reversed string";
-//
-//    alert(newMsg);
-//  }
+  function reverseString(msg) {
+    return(msg.split("").reverse().join(""));
+  }
 
-// Here's a stub of event stuff you could use
-//
+  // do some stuff here to reverse that string into a new variable  
+  var newMsg = reverseString(msg);
 
-//  var button = document.getElementById('reverse-string-button');
-//  button.addEventListener('click', reverseString);
+  // Here's a stub of event stuff you could use
+  var button = document.getElementById('reverse-string-button');
+  button.addEventListener('click', function(){ alert(newMsg) });
 </script>
 
 
@@ -134,9 +157,12 @@
        alt="Adorbz" id="kittenz-rule">
 </fieldset>
 
+<script src="https://code.jquery.com/jquery.js"></script>
 <script>
   "use strict";
-  // put your code here
+  // JQuery practice
+  $("#kittenz-rule").on('click', function(){$("#kittenz-rule").attr("src", "static/img/dog.gif");});
+
 </script>
 
 <div class="hint">
@@ -167,7 +193,46 @@
 
 <script>
   "use strict";
-  // put your code here
+  // play button press condition
+  $("#play-guessing-game").on('click', function(){
+    // function disable the play button
+    $("#play-guessing-game").prop('disabled', true);
+    // in "n-g-m" div asks the user to guess number
+    $("#number-guessing-msg").html("Guess a number between 1 to 100");
+    //"try-this-number" enable
+    $("#try-this-number").prop('disabled', false);
+    $("#number-guessed").prop('disabled', false);
+  });
+
+  // function pick a random integer from 1-100
+  var randint = Math.floor(Math.random()*100);
+  // console.log(randint); //this line can be used for testing
+  // passing the value seems to be setting up custom attribute in the html, then call it below due to time limit, the global var used because it generates randint no matter it seems more ideal to use passing the value
+  
+  // press guess
+  $("#try-this-number").on('click', function(evt){
+    evt.preventDefault();
+    var guess = document.getElementById("number-guessed").value
+    // too high
+    if (guess > randint){
+      $("#number-guessing-msg").html("Too high");
+    }
+    // too low
+    else if (guess < randint){
+      $("#number-guessing-msg").html("Too low");
+    }
+    // right number
+    else {
+      // div congratulates the player
+      $("#number-guessing-msg").html("Congratulations, you got it!");
+      // form disabled
+      $("#play-guessing-game").prop('disabled', false);
+      // play button re-enabled
+      $("#try-this-number").prop('disabled', true);
+      $("#number-guessed").prop('disabled', true);
+    }
+  });
+
 </script>
 
 
@@ -234,6 +299,7 @@
   }
 
   // put your code here
+  $.post("/t-rex-attack.json", showTRexResults);
 
 </script>
 
